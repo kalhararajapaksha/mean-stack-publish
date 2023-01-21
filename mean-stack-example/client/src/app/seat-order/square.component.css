@@ -1,0 +1,9 @@
+.square {
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+    margin-right: 10px;
+    float: right;
+    border-style: groove;
+  }
+
