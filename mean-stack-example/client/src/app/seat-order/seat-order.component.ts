@@ -1,21 +1,11 @@
 import { Component, Renderer2, ElementRef, AfterViewInit } from '@angular/core';
 import { TestService } from '../test.service';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-square',
-  template: `    <button id = 'btnCreate' (click)="send()">New Game</button>
-                 <button id = 'btnJoin' (click)="join()">Join Game</button>
-                 <input type = 'text' [formControl]="nameControl" id = 'txtGameId'>
-                 <div id  = 'divPlayers'></div>
-                 <div>
-                 <div id ='left-hand' class="left-hand">
-                      <div   *ngFor="let item of items;let i=index">
-                           <div [id]="i" class='square'  (click)="clickOnSeat(i)" [ngStyle]="{'background-color': backgroundColor}"></div>
-                      </div>                 
-                 </div>
-                 <div>
-  `,
+  templateUrl: './seat-order.component.html',
   styleUrls: ['square.component.css']
 })
 export class SquareComponent implements AfterViewInit{
@@ -29,22 +19,33 @@ export class SquareComponent implements AfterViewInit{
    private game=null;
    backgroundColor: string = 'white';
 
-   constructor(private wsService: TestService,private renderer: Renderer2, private el: ElementRef) {
+
+
+   constructor(private wsService: TestService,private renderer: Renderer2, private el: ElementRef,private router: Router,
+    private route: ActivatedRoute) {
     this.items=Array.from(Array(0).keys());
     this.wsService.receive().subscribe(message => {
       if(message.method=="connect"){
 
         this.clientID=message.clientId;
-        console.log("Connected");
-        console.log(message.clientId);
-        //this.send();
+        console.log('hello');
+        console.log(this.clientID);
+        const id = this.route.snapshot.paramMap.get('id');
+        console.log(id);
+        if (!id) {
+          alert('No id provided');
+        }
+        else{ 
+          this.GameID=id;
+          console.log(this.GameID);
+          this.join(id);}
       };
-      if(message.method=="create"){
-        this.GameID=message.game.id;
-        console.log("New Game Created");       
-        console.log(message.game);
-        this.join();
-      };
+      // if(message.method=="create"){
+      //   this.GameID=message.game.id;
+      //   console.log("New Game Created");       
+      //   console.log(message.game);
+      //   //this.join();
+      // };
       if(message.method=="join"){
         this.GameID=message.game.id;
         this.game=message.game.clients;
@@ -76,27 +77,22 @@ export class SquareComponent implements AfterViewInit{
       };
     });
   }
+
   ngAfterViewInit() {
     console.log('View has been initialized');
     // Do additional setup here
   }
 
-  send() {
-    const payLoad = {
-      method: 'create',
-      clientId: this.clientID,
-    };
-    this.wsService.send(payLoad);
-  }
 
-  join() {
+  join(id:any) {
 
     const payLoad = {
       method: 'join',
       clientId: this.clientID,
-      gameId:this.nameControl.value,
+      gameId:id,
     };
     this.wsService.send(payLoad);
+    console.log("send join request ")
   }
 
   clickOnSeat(data: any) {
@@ -104,7 +100,7 @@ export class SquareComponent implements AfterViewInit{
     const payLoad = {
       method: 'play',
       clientId: this.clientID,
-      gameId:this.nameControl.value,
+      gameId:this.GameID,
       ballId:data,
       color:this.playerColor
     };

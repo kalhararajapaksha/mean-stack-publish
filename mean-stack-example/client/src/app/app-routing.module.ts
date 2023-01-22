@@ -11,8 +11,8 @@ import { UserSigninFormComponent } from './user-signin-form/user-signin-form.com
 const routes: Routes = [
  { path: '', redirectTo: 'home', pathMatch: 'full' },
  { path: 'home', component: EmployeesListComponent },
- //{ path: 'employees/new', component: AddEmployeeComponent },
- { path: 'home/new', component: ReservationFormComponent },
+ { path: 'home/new', component: AddEmployeeComponent },
+ //{ path: 'home/new', component: ReservationFormComponent },
  { path: 'home/new/reservation/:id', component: SquareComponent },// <-- add this line
  //{ path: 'home/new', component: CanvasComponent },
  { path: 'login', component: UserSigninFormComponent },

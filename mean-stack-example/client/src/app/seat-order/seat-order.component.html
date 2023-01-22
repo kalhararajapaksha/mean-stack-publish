@@ -1,0 +1,20 @@
+<!-- <button id = 'btnCreate' (click)="send()">New Game</button>
+ <button id = 'btnJoin' (click)="join()">Join Game</button> -->
+<!-- <input type = 'text' [formControl]="nameControl" id = 'txtGameId'> --> 
+<app-navbar></app-navbar>
+<div id  = 'divPlayers'></div>
+<br>
+<div class="container-md">
+    <div class="card bg-light mb-8" >
+        <div class="card-header text-center">Class A</div>
+        <div class="card-body">
+            <div id ='left-hand' class="left-hand">
+                <div   *ngFor="let item of items;let i=index">
+                     <div [id]="i" class='square'  (click)="clickOnSeat(i)" [ngStyle]="{'background-color': backgroundColor}"></div>
+                </div>                 
+           </div>
+         
+        </div>
+      </div>
+<div>
+

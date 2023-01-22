@@ -10,42 +10,8 @@ import { SheduleService } from '../shedule.service';
 import * as moment from 'moment';
 @Component({
   selector: 'app-reservation-form',
-  template: `
-  <app-navbar></app-navbar>
-  <div class="row">
-  <form [formGroup]="searchForm">
-  <div class="form-group">
-    <label for="from">Destination:</label>
-    <select class="form-control" id="from"  name="from">
-    <option *ngFor="let station of stations$ | async" [value]="station._id">{{station.name}}</option>
-    </select>
-  </div>
-  <div class="form-group">
-    <label for="date">Date:</label>
-    <input type="date" class="form-control" id="date"  name="date" formControlName="date">
-  </div>
-  <br>
-  <input type="button" class="btn btn-primary" (click)="viewDetails()" value="Search">
-</form>
-</div>
-<br>
-<div class="row">
-<div class="col-md-3" *ngFor="let data  of combinedFilteredData$ | async">
-<div class="card">
-<img src="{{ data.train.img_url}}" alt="" class="card-img-top">
-<div class="card-body">
-  <h5 class="card-title">{{ data.train.train_name}}</h5>
-  <p class="card-text">{{ data.train.time}}</p>
-  <p class="card-text">Price: Rs {{ data.train.ticket_price}}</p>
-  <button class="btn btn-primary  me-1" [routerLink]="['reservation/',data.schedule?.session_ID]">View Details</button>
-</div>
-</div>
-</div>
-</div>
-
-  `,
-  styles: [
-  ]
+  templateUrl: './reservation-form.component.html',
+  styles: []
 })
 export class ReservationFormComponent implements OnInit {
   @Input()

@@ -15,6 +15,7 @@ import { UserRegistrationFormComponent } from './user-registration-form/user-reg
 import { UserSigninFormComponent } from './user-signin-form/user-signin-form.component';
 import { CanvasComponent } from './canvas/canvas.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { HeroComponent } from './hero/hero.component';
 
  
 @NgModule({
@@ -29,7 +30,8 @@ import { NavbarComponent } from './navbar/navbar.component';
    UserRegistrationFormComponent,
    UserSigninFormComponent,
    CanvasComponent,
-   NavbarComponent
+   NavbarComponent,
+   HeroComponent
  ],
  imports: [
    BrowserModule,
